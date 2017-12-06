@@ -1,7 +1,7 @@
-require 'hashie/hash'
+require 'wahashie/hash'
 require 'set'
 
-module Hashie
+module Wahashie
   # A Dash is a 'defined' or 'discrete' Hash, that is, a Hash
   # that has a set of defined keys that are accessible (with
   # optional defaults) and only those keys may be set or read.
@@ -12,8 +12,8 @@ module Hashie
   #
   # It is preferrable to a Struct because of the in-class
   # API for defining properties as well as per-property defaults.
-  class Dash < Hashie::Hash
-    include Hashie::PrettyInspect
+  class Dash < Wahashie::Hash
+    include Wahashie::PrettyInspect
     alias_method :to_s, :inspect
 
     # Defines a property on the Dash. Options are

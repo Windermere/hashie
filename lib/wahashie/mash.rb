@@ -1,6 +1,6 @@
-require 'hashie/hash'
+require 'wahashie/hash'
 
-module Hashie
+module Wahashie
   # Mash allows you to create pseudo-objects that have method-like
   # accessors for hash keys. This is useful for such implementations
   # as an API-accessing library that wants to fake robust objects
@@ -42,8 +42,8 @@ module Hashie
   #   mash.author!.name = "Michael Bleigh"
   #   mash.author # => <Mash name="Michael Bleigh">
   #
-  class Mash < Hashie::Hash
-    include Hashie::PrettyInspect
+  class Mash < Wahashie::Hash
+    include Wahashie::PrettyInspect
     alias_method :to_s, :inspect
 
     # If you pass in an existing hash, it will
@@ -55,7 +55,13 @@ module Hashie
       default ? super(default) : super(&blk)
     end
 
-    class << self; alias [] new; end
+    class << self
+      alias [] new
+
+      def subkey_class
+        self
+      end
+    end
 
     def id #:nodoc:
       key?("id") ? self["id"] : super
@@ -180,7 +186,7 @@ module Hashie
           val.dup
         when ::Hash
           val = val.dup if duping
-          self.class.new(val)
+          self.class.subkey_class.new.merge(val)
         when Array
           val.collect{ |e| convert_value(e) }
         else

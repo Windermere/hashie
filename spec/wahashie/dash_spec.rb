@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-Hashie::Hash.class_eval do
+Wahashie::Hash.class_eval do
   def self.inherited(klass)
     klass.instance_variable_set('@inheritance_test', true)
   end
 end
 
-class DashTest < Hashie::Dash
+class DashTest < Wahashie::Dash
   property :first_name, :required => true
   property :email
   property :count, :default => 0
 end
 
-class DashNoRequiredTest < Hashie::Dash
+class DashNoRequiredTest < Wahashie::Dash
   property :first_name
   property :email
   property :count, :default => 0
@@ -26,14 +26,14 @@ describe DashTest do
 
   subject { DashTest.new(:first_name => 'Bob', :email => 'bob@example.com') }
 
-  it('subclasses Hashie::Hash') { should respond_to(:to_mash) }
+  it('subclasses Wahashie::Hash') { should respond_to(:to_mash) }
 
-  its(:to_s) { should == '<#DashTest count=0 email="bob@example.com" first_name="Bob">' }
+  its(:to_s) { should == '#<DashTest count=0 email="bob@example.com" first_name="Bob">' }
 
   it 'lists all set properties in inspect' do
     subject.first_name = 'Bob'
     subject.email = 'bob@example.com'
-    subject.inspect.should == '<#DashTest count=0 email="bob@example.com" first_name="Bob">'
+    subject.inspect.should == '#<DashTest count=0 email="bob@example.com" first_name="Bob">'
   end
 
   its(:count) { should be_zero }
@@ -147,9 +147,9 @@ describe DashTest do
   end
 end
 
-describe Hashie::Dash, 'inheritance' do
+describe Wahashie::Dash, 'inheritance' do
   before do
-    @top = Class.new(Hashie::Dash)
+    @top = Class.new(Wahashie::Dash)
     @middle = Class.new(@top)
     @bottom = Class.new(@middle)
   end

@@ -1,13 +1,13 @@
-require 'hashie/dash'
+require 'wahashie/dash'
 
-module Hashie
+module Wahashie
   # A Trash is a 'translated' Dash where the keys can be remapped from a source
   # hash.
   #
   # Trashes are useful when you need to read data from another application,
   # such as a Java api, where the keys are named differently from how we would
   # in Ruby.
-  class Trash < Hashie::Dash
+  class Trash < Wahashie::Dash
 
     # Defines a property on the Trash. Options are as follows:
     #

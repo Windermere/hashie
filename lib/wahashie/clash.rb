@@ -1,20 +1,20 @@
-require 'hashie/hash'
+require 'wahashie/hash'
 
-module Hashie
+module Wahashie
   #
   # A Clash is a "Chainable Lazy Hash". Inspired by libraries such as Arel,
   # a Clash allows you to chain together method arguments to build a 
   # hash, something that's especially useful if you're doing something
   # like constructing a complex options hash. Here's a basic example:
   # 
-  #     c = Hashie::Clash.new.conditions(:foo => 'bar').order(:created_at)
+  #     c = Wahashie::Clash.new.conditions(:foo => 'bar').order(:created_at)
   #     c # => {:conditions => {:foo => 'bar'}, :order => :created_at}
   #
   # Clash provides another way to create sub-hashes by using bang notation.
   # You can dive into a sub-hash by providing a key with a bang and dive
   # back out again with the _end! method. Example:
   #
-  #     c = Hashie::Clash.new.conditions!.foo('bar').baz(123)._end!.order(:created_at)
+  #     c = Wahashie::Clash.new.conditions!.foo('bar').baz(123)._end!.order(:created_at)
   #     c # => {:conditions => {:foo => 'bar', :baz => 123}, :order => :created_at}
   #
   # Because the primary functionality of Clash is to build options objects,
@@ -39,7 +39,7 @@ module Hashie
     # Jump back up a level if you are using bang method
     # chaining. For example:
     #
-    # c = Hashie::Clash.new.foo('bar')
+    # c = Wahashie::Clash.new.foo('bar')
     # c.baz!.foo(123) # => c[:baz]
     # c.baz!._end! # => c
     def _end!

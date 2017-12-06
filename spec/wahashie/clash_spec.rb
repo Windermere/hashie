@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Hashie::Clash do
+describe Wahashie::Clash do
   before do
-    @c = Hashie::Clash.new
+    @c = Wahashie::Clash.new
   end
   
   it 'should be able to set an attribute via method_missing' do
@@ -22,7 +22,7 @@ describe Hashie::Clash do
   
   it 'should be able to use bang notation to create a new Clash on a key' do
     @c.foo!
-    @c[:foo].should be_kind_of(Hashie::Clash)
+    @c[:foo].should be_kind_of(Wahashie::Clash)
   end
   
   it 'should be able to chain onto the new Clash when using bang notation' do

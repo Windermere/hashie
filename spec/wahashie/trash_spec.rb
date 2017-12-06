@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Hashie::Trash do
-  class TrashTest < Hashie::Trash
+describe Wahashie::Trash do
+  class TrashTest < Wahashie::Trash
     property :first_name, :from => :firstName
   end
 

@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'delegate'
 
-describe Hashie::Mash do
+describe Wahashie::Mash do
   before(:each) do
-    @mash = Hashie::Mash.new
+    @mash = Wahashie::Mash.new
   end
 
   it "should inherit from hash" do
@@ -62,8 +62,8 @@ describe Hashie::Mash do
     @mash.abc.should be_nil
   end
 
-  it "should return a Hashie::Mash when passed a bang method to a non-existenct key" do
-    @mash.abc!.is_a?(Hashie::Mash).should be_true
+  it "should return a Wahashie::Mash when passed a bang method to a non-existenct key" do
+    @mash.abc!.is_a?(Wahashie::Mash).should be_true
   end
 
   it "should return the existing value when passed a bang method for an existing key" do
@@ -71,19 +71,19 @@ describe Hashie::Mash do
     @mash.name!.should == "Bob"
   end
 
-  it "#initializing_reader should return a Hashie::Mash when passed a non-existent key" do
-    @mash.initializing_reader(:abc).is_a?(Hashie::Mash).should be_true
+  it "#initializing_reader should return a Wahashie::Mash when passed a non-existent key" do
+    @mash.initializing_reader(:abc).is_a?(Wahashie::Mash).should be_true
   end
 
   it "should allow for multi-level assignment through bang methods" do
     @mash.author!.name = "Michael Bleigh"
-    @mash.author.should == Hashie::Mash.new(:name => "Michael Bleigh")
+    @mash.author.should == Wahashie::Mash.new(:name => "Michael Bleigh")
     @mash.author!.website!.url = "http://www.mbleigh.com/"
-    @mash.author.website.should == Hashie::Mash.new(:url => "http://www.mbleigh.com/")
+    @mash.author.website.should == Wahashie::Mash.new(:url => "http://www.mbleigh.com/")
   end
 
   # it "should call super if type is not a key" do
-  #   @mash.type.should == Hashie::Mash
+  #   @mash.type.should == Wahashie::Mash
   # end
 
   it "should return the value if type is a key" do
@@ -98,7 +98,7 @@ describe Hashie::Mash do
     }
 
     describe "#deep_update" do
-      it "should recursively Hashie::Mash Hashie::Mashes and hashes together" do
+      it "should recursively Wahashie::Mash Wahashie::Mashes and hashes together" do
         subject.deep_update(:details => {:email => "michael@intridea.com", :city => "Imagineton"})
         subject.first_name.should == "Michael"
         subject.details.email.should == "michael@intridea.com"
@@ -129,7 +129,7 @@ describe Hashie::Mash do
     end
 
     describe "shallow update" do
-      it "should shallowly Hashie::Mash Hashie::Mashes and hashes together" do
+      it "should shallowly Wahashie::Mash Wahashie::Mashes and hashes together" do
         subject.shallow_update(:details => {
           :email => "michael@intridea.com", :city => "Imagineton"
         }).should eql(subject)
@@ -168,14 +168,14 @@ describe Hashie::Mash do
     end
   end
 
-  it "should convert hash assignments into Hashie::Mashes" do
+  it "should convert hash assignments into Wahashie::Mashes" do
     @mash.details = {:email => 'randy@asf.com', :address => {:state => 'TX'} }
     @mash.details.email.should == 'randy@asf.com'
     @mash.details.address.state.should == 'TX'
   end
 
-  it "should not convert the type of Hashie::Mashes childs to Hashie::Mash" do
-    class MyMash < Hashie::Mash
+  it "should not convert the type of Wahashie::Mashes childs to Wahashie::Mash" do
+    class MyMash < Wahashie::Mash
     end
 
     record = MyMash.new
@@ -184,20 +184,20 @@ describe Hashie::Mash do
   end
 
   it "should not change the class of Mashes when converted" do
-    class SubMash < Hashie::Mash
+    class SubMash < Wahashie::Mash
     end
 
-    record = Hashie::Mash.new
+    record = Wahashie::Mash.new
     son = SubMash.new
     record['submash'] = son
     record['submash'].should be_kind_of(SubMash)
   end
 
   it "should respect the class when passed a bang method for a non-existent key" do
-    record = Hashie::Mash.new
-    record.non_existent!.should be_kind_of(Hashie::Mash)
+    record = Wahashie::Mash.new
+    record.non_existent!.should be_kind_of(Wahashie::Mash)
 
-    class SubMash < Hashie::Mash
+    class SubMash < Wahashie::Mash
     end
 
     son = SubMash.new
@@ -205,51 +205,51 @@ describe Hashie::Mash do
   end
 
   it "should respect the class when converting the value" do
-    record = Hashie::Mash.new
-    record.details = Hashie::Mash.new({:email => "randy@asf.com"})
-    record.details.should be_kind_of(Hashie::Mash)
+    record = Wahashie::Mash.new
+    record.details = Wahashie::Mash.new({:email => "randy@asf.com"})
+    record.details.should be_kind_of(Wahashie::Mash)
 
-    class SubMash < Hashie::Mash
+    class SubMash < Wahashie::Mash
     end
 
     son = SubMash.new
-    son.details = Hashie::Mash.new({:email => "randyjr@asf.com"})
+    son.details = Wahashie::Mash.new({:email => "randyjr@asf.com"})
     son.details.should be_kind_of(SubMash)
   end
 
   describe '#respond_to?' do
     it 'should respond to a normal method' do
-      Hashie::Mash.new.should be_respond_to(:key?)
+      Wahashie::Mash.new.should be_respond_to(:key?)
     end
 
     it 'should respond to a set key' do
-      Hashie::Mash.new(:abc => 'def').should be_respond_to(:abc)
+      Wahashie::Mash.new(:abc => 'def').should be_respond_to(:abc)
     end
   end
 
   context "#initialize" do
-    it "should convert an existing hash to a Hashie::Mash" do
-      converted = Hashie::Mash.new({:abc => 123, :name => "Bob"})
+    it "should convert an existing hash to a Wahashie::Mash" do
+      converted = Wahashie::Mash.new({:abc => 123, :name => "Bob"})
       converted.abc.should == 123
       converted.name.should == "Bob"
     end
 
-    it "should convert hashes recursively into Hashie::Mashes" do
-      converted = Hashie::Mash.new({:a => {:b => 1, :c => {:d => 23}}})
-      converted.a.is_a?(Hashie::Mash).should be_true
+    it "should convert hashes recursively into Wahashie::Mashes" do
+      converted = Wahashie::Mash.new({:a => {:b => 1, :c => {:d => 23}}})
+      converted.a.is_a?(Wahashie::Mash).should be_true
       converted.a.b.should == 1
       converted.a.c.d.should == 23
     end
 
-    it "should convert hashes in arrays into Hashie::Mashes" do
-      converted = Hashie::Mash.new({:a => [{:b => 12}, 23]})
+    it "should convert hashes in arrays into Wahashie::Mashes" do
+      converted = Wahashie::Mash.new({:a => [{:b => 12}, 23]})
       converted.a.first.b.should == 12
       converted.a.last.should == 23
     end
 
-    it "should convert an existing Hashie::Mash into a Hashie::Mash" do
-      initial = Hashie::Mash.new(:name => 'randy', :address => {:state => 'TX'})
-      copy = Hashie::Mash.new(initial)
+    it "should convert an existing Wahashie::Mash into a Wahashie::Mash" do
+      initial = Wahashie::Mash.new(:name => 'randy', :address => {:state => 'TX'})
+      copy = Wahashie::Mash.new(initial)
       initial.name.should == copy.name
       initial.object_id.should_not == copy.object_id
       copy.address.state.should == 'TX'
@@ -259,11 +259,23 @@ describe Hashie::Mash do
     end
 
     it "should accept a default block" do
-      initial = Hashie::Mash.new { |h,i| h[i] = []}
+      initial = Wahashie::Mash.new { |h,i| h[i] = []}
       initial.default_proc.should_not be_nil
       initial.default.should be_nil
       initial.test.should == []
       initial.test?.should be_true
+    end
+
+    describe '.subkey_class' do
+      it 'should be able to define a subkey class different from itself' do
+        class CustomSubkeyHash < Wahashie::Mash
+          def self.subkey_class; Wahashie::Mash end
+        end
+
+        subhash = CustomSubkeyHash.new(:subhash => {:abc => :def})[:subhash]
+        subhash.should_not be_kind_of(CustomSubkeyHash)
+        subhash.should be_kind_of(Wahashie::Mash)
+      end
     end
   end
 end
